@@ -44,6 +44,7 @@ public class Yahtzee extends javax.swing.JFrame {
     
     //
     int turnCount = 0;
+    int numPlayers = 0;
     
     int random1 = 0;
     int random2 = 0;
@@ -57,6 +58,8 @@ public class Yahtzee extends javax.swing.JFrame {
     final int LG_STRAIGHT = 40;
     final int YAHTZEE = 50;
     final int BONUS = 100;
+    boolean YahtzeeBonus = false;
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -66,7 +69,6 @@ public class Yahtzee extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        category = new javax.swing.ButtonGroup();
         GamePage = new javax.swing.JPanel();
         rerollButton = new javax.swing.JButton();
         roll5 = new javax.swing.JLabel();
@@ -221,22 +223,29 @@ public class Yahtzee extends javax.swing.JFrame {
 
         endTurnButton.setBackground(new java.awt.Color(102, 102, 255));
         endTurnButton.setText("End Turn");
+        endTurnButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                endTurnButtonActionPerformed(evt);
+            }
+        });
         GamePage.add(endTurnButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 150, -1, -1));
 
         largeStraight.setBackground(new java.awt.Color(102, 102, 255));
-        category.add(largeStraight);
         largeStraight.setForeground(new java.awt.Color(255, 153, 0));
         largeStraight.setText("Large straight (5)");
         GamePage.add(largeStraight, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 110, -1, -1));
 
         aces.setBackground(new java.awt.Color(102, 102, 255));
-        category.add(aces);
         aces.setForeground(new java.awt.Color(255, 153, 0));
         aces.setText("Aces");
+        aces.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                acesActionPerformed(evt);
+            }
+        });
         GamePage.add(aces, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 30, -1, -1));
 
         twos.setBackground(new java.awt.Color(102, 102, 255));
-        category.add(twos);
         twos.setForeground(new java.awt.Color(255, 153, 0));
         twos.setText("Twos");
         twos.addActionListener(new java.awt.event.ActionListener() {
@@ -247,61 +256,51 @@ public class Yahtzee extends javax.swing.JFrame {
         GamePage.add(twos, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 50, -1, -1));
 
         threes.setBackground(new java.awt.Color(102, 102, 255));
-        category.add(threes);
         threes.setForeground(new java.awt.Color(255, 153, 0));
         threes.setText("Threes");
         GamePage.add(threes, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 70, -1, -1));
 
         fours.setBackground(new java.awt.Color(102, 102, 255));
-        category.add(fours);
         fours.setForeground(new java.awt.Color(255, 153, 0));
         fours.setText("Fours");
         GamePage.add(fours, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 90, -1, -1));
 
         fives.setBackground(new java.awt.Color(102, 102, 255));
-        category.add(fives);
         fives.setForeground(new java.awt.Color(255, 153, 0));
         fives.setText("Fives");
         GamePage.add(fives, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 110, -1, -1));
 
         sixes.setBackground(new java.awt.Color(102, 102, 255));
-        category.add(sixes);
         sixes.setForeground(new java.awt.Color(255, 153, 0));
         sixes.setText("Sixes");
         GamePage.add(sixes, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 130, -1, -1));
 
         threeKind.setBackground(new java.awt.Color(102, 102, 255));
-        category.add(threeKind);
         threeKind.setForeground(new java.awt.Color(255, 153, 0));
         threeKind.setText("3 of a kind");
         GamePage.add(threeKind, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 30, -1, -1));
 
         fourKind.setBackground(new java.awt.Color(102, 102, 255));
-        category.add(fourKind);
         fourKind.setForeground(new java.awt.Color(255, 153, 0));
         fourKind.setText("4 of a kind");
         GamePage.add(fourKind, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 50, -1, -1));
 
         Yahtzee.setBackground(new java.awt.Color(102, 102, 255));
-        category.add(Yahtzee);
         Yahtzee.setForeground(new java.awt.Color(255, 153, 0));
         Yahtzee.setText("Yahtzee (5 of a kind)");
         GamePage.add(Yahtzee, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 130, -1, -1));
 
         chance.setBackground(new java.awt.Color(102, 102, 255));
-        category.add(chance);
         chance.setForeground(new java.awt.Color(255, 153, 0));
         chance.setText("Chance");
         GamePage.add(chance, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 150, -1, -1));
 
         fullHouse.setBackground(new java.awt.Color(102, 102, 255));
-        category.add(fullHouse);
         fullHouse.setForeground(new java.awt.Color(255, 153, 0));
         fullHouse.setText("Full house");
         GamePage.add(fullHouse, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 70, -1, -1));
 
         smallStraight.setBackground(new java.awt.Color(102, 102, 255));
-        category.add(smallStraight);
         smallStraight.setForeground(new java.awt.Color(255, 153, 0));
         smallStraight.setText("Small straight (4)");
         smallStraight.addActionListener(new java.awt.event.ActionListener() {
@@ -444,24 +443,28 @@ public class Yahtzee extends javax.swing.JFrame {
             player2.setEnabled(false);
             player3.setEnabled(false);
             player4.setEnabled(false);
+            numPlayers = 1;
         }
         else if (playCount.getSelectedIndex() == 1) {
             player1.setEnabled(true);
             player2.setEnabled(true);
             player3.setEnabled(false);
             player4.setEnabled(false);
+            numPlayers = 2;
         }
         else if (playCount.getSelectedIndex() == 2) {
             player1.setEnabled(true);
             player2.setEnabled(true);
             player3.setEnabled(true);
             player4.setEnabled(false);
+            numPlayers = 3;
         }
         else {
             player1.setEnabled(true);
             player2.setEnabled(true);
             player3.setEnabled(true);
             player4.setEnabled(true);
+            numPlayers = 4;
         }
     }//GEN-LAST:event_playCountActionPerformed
 
@@ -546,6 +549,530 @@ public class Yahtzee extends javax.swing.JFrame {
                 }
     }//GEN-LAST:event_RulesActionPerformed
 
+    private void acesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acesActionPerformed
+        
+    }//GEN-LAST:event_acesActionPerformed
+
+    private void endTurnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endTurnButtonActionPerformed
+        UpperSection();
+        if (turnCount == 0) {
+            scoreTable.setValueAt(score1, 0, 1);
+            System.out.println(score1);
+        }
+        else if (turnCount == 1) {
+            scoreTable.setValueAt(score2, 1, 1);
+            System.out.println(score2);
+        }
+        else if (turnCount == 2) {
+            scoreTable.setValueAt(score3, 2, 1);
+            System.out.println(score3);
+        }
+        else {
+            scoreTable.setValueAt(score4, 3, 1);
+            System.out.println(score4);
+        }
+        turnOrder();
+        scorePage.setVisible(true);
+        GamePage.setVisible(false);
+        
+    }//GEN-LAST:event_endTurnButtonActionPerformed
+
+    public void UpperSection() {
+        Aces();
+        Twos();
+        Threes();
+        Fours();
+        Fives();
+        Sixes();
+        
+    }
+    
+    public void Aces() {
+        //Add all ones
+        if (aces.isSelected()) {
+            System.out.println("E");
+            if (random1 == 1) {
+                if (turnCount == 0) {
+                    score1 = score1 + 1;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 1;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 1;
+                }
+                else {
+                    score4 = score4 + 1; 
+                }
+            }
+            if (random2 == 1) {
+                if (turnCount == 0) {
+                score1 = score1 + 1;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 1;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 1;
+                }
+                else {
+                    score4 = score4 + 1; 
+                }
+            }
+            if (random3 == 1) {
+                if (turnCount == 0) {
+                    score1 = score1 + 1;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 1;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 1;
+                }
+                else {
+                    score4 = score4 + 1; 
+                }
+            }
+            if (random4 == 1) {
+                if (turnCount == 0) {
+                    score1 = score1 + 1;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 1;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 1;
+                }
+                else {
+                    score4 = score4 + 1; 
+                }
+            }
+            if (random5 == 1) {
+                if (turnCount == 0) {
+                    score1 = score1 + 1;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 1;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 1;
+                }
+                else {
+                    score4 = score4 + 1; 
+                }
+            }
+        }
+    }
+    
+    public void Twos() {
+        //Add all twos
+        if(twos.isSelected()) {
+            if (random1 == 2) {
+                if (turnCount == 0) {
+                    score1 = score1 + 2;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 2;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 2;
+                }
+                else {
+                    score4 = score4 + 2; 
+                }
+            }
+            if (random2 == 2) {
+                if (turnCount == 0) {
+                score1 = score1 + 2;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 2;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 2;
+                }
+                else {
+                    score4 = score4 + 2; 
+                }
+            }
+            if (random3 == 2) {
+                if (turnCount == 0) {
+                    score1 = score1 + 2;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 2;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 2;
+                }
+                else {
+                    score4 = score4 + 2; 
+                }
+            }
+            if (random4 == 2) {
+                if (turnCount == 0) {
+                    score1 = score1 + 2;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 2;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 2;
+                }
+                else {
+                    score4 = score4 + 2; 
+                }
+            }
+            if (random5 == 2) {
+                if (turnCount == 0) {
+                    score1 = score1 + 2;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 2;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 2;
+                }
+                else {
+                    score4 = score4 + 2; 
+                }
+            }
+        }
+    }
+    
+    public void Threes() {
+        //Add all threes
+        if(threes.isSelected()) {
+            if (random1 == 3) {
+                if (turnCount == 0) {
+                    score1 = score1 + 3;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 3;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 3;
+                }
+                else {
+                    score4 = score4 + 3; 
+                }
+            }
+            if (random2 == 3) {
+                if (turnCount == 0) {
+                    score1 = score1 + 3;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 3;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 3;
+                }
+                else {
+                    score4 = score4 + 3; 
+                }
+            }
+            if (random3 == 3) {
+                if (turnCount == 0) {
+                    score1 = score1 + 3;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 3;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 3;
+                }
+                else {
+                    score4 = score4 + 3; 
+                }
+            }
+            if (random4 == 3) {
+                if (turnCount == 0) {
+                    score1 = score1 + 3;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 3;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 3;
+                }
+                else {
+                    score4 = score4 + 3; 
+                }
+            }
+            if (random5 == 3) {
+                if (turnCount == 0) {
+                    score1 = score1 + 3;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 3;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 3;
+                }
+                else {
+                    score4 = score4 + 3; 
+                }
+            }
+        }
+    }
+    
+    public void Fours() {
+        //Add all fours
+        if(fours.isSelected()) {
+                System.out.println("E");
+            if (random1 == 4) {
+                if (turnCount == 0) {
+                    score1 = score1 + 4;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 4;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 4;
+                }
+                else {
+                    score4 = score4 + 4; 
+                }
+            }
+            if (random2 == 4) {
+                if (turnCount == 0) {
+                    score1 = score1 + 4;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 4;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 4;
+                }
+                else {
+                    score4 = score4 + 4; 
+                }
+            }
+            if (random3 == 4) {
+                if (turnCount == 0) {
+                    score1 = score1 + 4;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 4;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 4;
+                }
+                else {
+                    score4 = score4 + 4; 
+                }
+            }
+            if (random4 == 4) {
+                if (turnCount == 0) {
+                    score1 = score1 + 4;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 4;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 4;
+                }
+                else {
+                    score4 = score4 + 4; 
+                }
+            }
+            if (random5 == 4) {
+                if (turnCount == 0) {
+                    score1 = score1 + 4;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 4;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 4;
+                }
+                else {
+                    score4 = score4 + 4; 
+                }
+            }
+        }
+    }
+    
+    public void Fives() {
+        //Add all fives
+        if(fives.isSelected()) {
+            if (random1 == 5) {
+                if (turnCount == 0) {
+                    score1 = score1 + 5;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 5;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 5;
+                }
+                else {
+                    score4 = score4 + 5; 
+                }
+            }
+            if (random2 == 5) {
+                if (turnCount == 0) {
+                    score1 = score1 + 5;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 5;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 5;
+                }
+                else {
+                    score4 = score4 + 5; 
+                }
+            }
+            if (random3 == 5) {
+                if (turnCount == 0) {
+                    score1 = score1 + 5;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 5;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 5;
+                }
+                else {
+                    score4 = score4 + 5; 
+                }
+            }
+            if (random4 == 5) {
+                if (turnCount == 0) {
+                    score1 = score1 + 5;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 5;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 5;
+                }
+                else {
+                    score4 = score4 + 5; 
+                }
+            }
+            if (random5 == 5) {
+                if (turnCount == 0) {
+                    score1 = score1 + 5;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 5;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 5;
+                }
+                else {
+                    score4 = score4 + 5; 
+                }
+            }
+        }
+    }
+    
+    public void Sixes() {
+        //Add all sixes
+        if(sixes.isSelected()) {
+            if (random1 == 6) {
+                if (turnCount == 0) {
+                    score1 = score1 + 6;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 6;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 6;
+                }
+                else {
+                    score4 = score4 + 6; 
+                }
+            }
+            if (random2 == 6) {
+                if (turnCount == 0) {
+                    score1 = score1 + 6;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 6;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 6;
+                }
+                else {
+                    score4 = score4 + 6; 
+                }
+            }
+            if (random3 == 6) {
+                if (turnCount == 0) {
+                    score1 = score1 + 6;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 6;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 6;
+                }
+                else {
+                    score4 = score4 + 6; 
+                }
+            }
+            if (random4 == 6) {
+                if (turnCount == 0) {
+                    score1 = score1 + 6;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 6;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 6;
+                }
+                else {
+                    score4 = score4 + 6; 
+                }
+            }
+            if (random5 == 6) {
+                if (turnCount == 0) {
+                    score1 = score1 + 6;
+                }
+                else if (turnCount == 1) {
+                    score2 = score2 + 6;
+                }
+                else if (turnCount == 2) {
+                    score3 = score3 + 6;
+                }
+                else {
+                    score4 = score4 + 6; 
+                }
+            }
+        }
+    }
+    public void turnOrder() {
+        if (numPlayers == 1) {
+            turnCount = 0;
+        }
+        else if (numPlayers == 2) {
+            if (turnCount != 1) {
+                turnCount = turnCount + 1;
+            }
+            else {
+                turnCount = 0;
+            }
+        }
+        else if (numPlayers == 3) {
+            if (turnCount != 2) {
+                turnCount = turnCount + 1;
+            }
+            else {
+                turnCount = 0;
+            }
+        }
+        else if (numPlayers == 4) {
+            if (turnCount != 3) {
+                turnCount = turnCount + 1;
+            }
+            else {
+                turnCount = 0;
+            }
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -587,7 +1114,6 @@ public class Yahtzee extends javax.swing.JFrame {
     private javax.swing.JPanel Start;
     private javax.swing.JRadioButton Yahtzee;
     private javax.swing.JRadioButton aces;
-    private javax.swing.ButtonGroup category;
     private javax.swing.JRadioButton chance;
     private javax.swing.JLabel dicePic;
     private javax.swing.JButton endTurnButton;
