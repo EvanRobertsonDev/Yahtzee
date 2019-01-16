@@ -9,6 +9,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.awt.Desktop;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  *
@@ -52,14 +53,21 @@ public class Yahtzee extends javax.swing.JFrame {
     int random4 = 0;
     int random5 = 0;
     
+    int [] diceArray = new int [5];
+    
+    //Checking full house
+    boolean hasPair = false;
+    boolean hasThree = false;
     //Preset Scores
     final int FULL_HOUSE = 25;
     final int SM_STRAIGHT = 30;
     final int LG_STRAIGHT = 40;
     final int YAHTZEE = 50;
     final int BONUS = 100;
-    boolean YahtzeeBonus = false;
-    
+    boolean YahtzeeBonus1 = false;
+    boolean YahtzeeBonus2 = false;
+    boolean YahtzeeBonus3 = false;
+    boolean YahtzeeBonus4 = false;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -69,6 +77,7 @@ public class Yahtzee extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        category = new javax.swing.ButtonGroup();
         GamePage = new javax.swing.JPanel();
         rerollButton = new javax.swing.JButton();
         roll5 = new javax.swing.JLabel();
@@ -223,6 +232,7 @@ public class Yahtzee extends javax.swing.JFrame {
 
         endTurnButton.setBackground(new java.awt.Color(102, 102, 255));
         endTurnButton.setText("End Turn");
+        endTurnButton.setEnabled(false);
         endTurnButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 endTurnButtonActionPerformed(evt);
@@ -231,11 +241,13 @@ public class Yahtzee extends javax.swing.JFrame {
         GamePage.add(endTurnButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 150, -1, -1));
 
         largeStraight.setBackground(new java.awt.Color(102, 102, 255));
+        category.add(largeStraight);
         largeStraight.setForeground(new java.awt.Color(255, 153, 0));
         largeStraight.setText("Large straight (5)");
         GamePage.add(largeStraight, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 110, -1, -1));
 
         aces.setBackground(new java.awt.Color(102, 102, 255));
+        category.add(aces);
         aces.setForeground(new java.awt.Color(255, 153, 0));
         aces.setText("Aces");
         aces.addActionListener(new java.awt.event.ActionListener() {
@@ -246,6 +258,7 @@ public class Yahtzee extends javax.swing.JFrame {
         GamePage.add(aces, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 30, -1, -1));
 
         twos.setBackground(new java.awt.Color(102, 102, 255));
+        category.add(twos);
         twos.setForeground(new java.awt.Color(255, 153, 0));
         twos.setText("Twos");
         twos.addActionListener(new java.awt.event.ActionListener() {
@@ -256,51 +269,61 @@ public class Yahtzee extends javax.swing.JFrame {
         GamePage.add(twos, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 50, -1, -1));
 
         threes.setBackground(new java.awt.Color(102, 102, 255));
+        category.add(threes);
         threes.setForeground(new java.awt.Color(255, 153, 0));
         threes.setText("Threes");
         GamePage.add(threes, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 70, -1, -1));
 
         fours.setBackground(new java.awt.Color(102, 102, 255));
+        category.add(fours);
         fours.setForeground(new java.awt.Color(255, 153, 0));
         fours.setText("Fours");
         GamePage.add(fours, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 90, -1, -1));
 
         fives.setBackground(new java.awt.Color(102, 102, 255));
+        category.add(fives);
         fives.setForeground(new java.awt.Color(255, 153, 0));
         fives.setText("Fives");
         GamePage.add(fives, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 110, -1, -1));
 
         sixes.setBackground(new java.awt.Color(102, 102, 255));
+        category.add(sixes);
         sixes.setForeground(new java.awt.Color(255, 153, 0));
         sixes.setText("Sixes");
         GamePage.add(sixes, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 130, -1, -1));
 
         threeKind.setBackground(new java.awt.Color(102, 102, 255));
+        category.add(threeKind);
         threeKind.setForeground(new java.awt.Color(255, 153, 0));
         threeKind.setText("3 of a kind");
         GamePage.add(threeKind, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 30, -1, -1));
 
         fourKind.setBackground(new java.awt.Color(102, 102, 255));
+        category.add(fourKind);
         fourKind.setForeground(new java.awt.Color(255, 153, 0));
         fourKind.setText("4 of a kind");
         GamePage.add(fourKind, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 50, -1, -1));
 
         Yahtzee.setBackground(new java.awt.Color(102, 102, 255));
+        category.add(Yahtzee);
         Yahtzee.setForeground(new java.awt.Color(255, 153, 0));
         Yahtzee.setText("Yahtzee (5 of a kind)");
         GamePage.add(Yahtzee, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 130, -1, -1));
 
         chance.setBackground(new java.awt.Color(102, 102, 255));
+        category.add(chance);
         chance.setForeground(new java.awt.Color(255, 153, 0));
         chance.setText("Chance");
         GamePage.add(chance, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 150, -1, -1));
 
         fullHouse.setBackground(new java.awt.Color(102, 102, 255));
+        category.add(fullHouse);
         fullHouse.setForeground(new java.awt.Color(255, 153, 0));
         fullHouse.setText("Full house");
         GamePage.add(fullHouse, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 70, -1, -1));
 
         smallStraight.setBackground(new java.awt.Color(102, 102, 255));
+        category.add(smallStraight);
         smallStraight.setForeground(new java.awt.Color(255, 153, 0));
         smallStraight.setText("Small straight (4)");
         smallStraight.addActionListener(new java.awt.event.ActionListener() {
@@ -532,9 +555,75 @@ public class Yahtzee extends javax.swing.JFrame {
         roll4.setText(String.valueOf(random4));
         roll5.setText(String.valueOf(random5));
         
+        //Set to array
+        diceArray[0] = random1;
+        diceArray[1] = random2;
+        diceArray[2] = random3;
+        diceArray[3] = random4;
+        diceArray[4] = random5;
+        Arrays.sort(diceArray);
+        
+        //Check for Three of a kind
+        for (int i = 0; i < 3; i++) {
+                if (diceArray[i] == diceArray[i+1] && diceArray[i] == diceArray[i+2]) {
+                    threeKind.setEnabled(true);
+                    i = 4;
+                }
+                else {
+                    threeKind.setEnabled(false);
+                }
+            }
+        //Check for Four of a Kind
+        for (int i = 0; i < 2; i++) {
+                if (diceArray[i] == diceArray[i+1] && diceArray[i] == diceArray[i+2] && diceArray[i] == diceArray[i+3]) {
+                    fourKind.setEnabled(true);
+                    i = 3;
+                }
+                else {
+                    fourKind.setEnabled(false);
+                }
+            }
+        //Check for Full House
+        for (int i = 0; i < 4; i++) {
+                if (diceArray[i] == diceArray[i+1]) {
+                    hasPair = true;
+                    diceArray[i] = 7;
+                    diceArray[i+1] = 7; 
+                    i = 4;
+                }
+                else {
+                    hasPair = false;
+                }
+            }
+        for (int i = 0; i < 3; i++) {
+                if (diceArray[i] == diceArray[i+1] && diceArray[i] == diceArray[i+2]) {
+                    hasThree = true; 
+                    i = 4;
+                }
+                else {
+                    hasThree = false;
+                }
+            }
+        if (hasPair == true && hasThree == true) {
+            fullHouse.setEnabled(true);
+        }
+        else {
+            fullHouse.setEnabled(false);
+        }
+        //Check for Yahtzee
+        for (int i = 0; i < 1; i++) {
+                if (diceArray[i] == diceArray[i+1] && diceArray[i] == diceArray[i+2] && diceArray[i] == diceArray[i+3] && diceArray[i] == diceArray[i+4]) {
+                    Yahtzee.setEnabled(true);
+                    i = 2;
+                }
+                else {
+                    Yahtzee.setEnabled(false);
+                }
+            }
         //Setup for re roll
         rollButton.setEnabled(false);
         rerollButton.setEnabled(true);
+        endTurnButton.setEnabled(true);
     }//GEN-LAST:event_rollButtonActionPerformed
 
     private void rerollButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rerollButtonActionPerformed
@@ -555,6 +644,7 @@ public class Yahtzee extends javax.swing.JFrame {
 
     private void endTurnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endTurnButtonActionPerformed
         UpperSection();
+        LowerSection();
         if (turnCount == 0) {
             scoreTable.setValueAt(score1, 0, 1);
             System.out.println(score1);
@@ -584,7 +674,16 @@ public class Yahtzee extends javax.swing.JFrame {
         Fours();
         Fives();
         Sixes();
-        
+    }
+    
+    public void LowerSection() {
+        ThreeKind();
+        FourKind();
+        FullHouse();
+        SmStraight();
+        LgStraight();
+        Yahtzee();
+        Chance();
     }
     
     public void Aces() {
@@ -1044,6 +1143,100 @@ public class Yahtzee extends javax.swing.JFrame {
             }
         }
     }
+    
+    public void ThreeKind() {
+        
+        if (threeKind.isSelected()) {
+            if (turnCount == 0) {
+                score1 = random1 + random2 + random3+ random4 + random5;
+            }
+            else if (turnCount == 1) {
+                score2 = random1 + random2 + random3+ random4 + random5;
+            }
+            else if (turnCount == 2) {
+                score3 = random1 + random2 + random3+ random4 + random5;
+            }
+            else if (turnCount == 3) {
+                score4 = random1 + random2 + random3+ random4 + random5;
+            }
+        }
+    }
+    
+    public void FourKind() {
+        if (fourKind.isSelected()) {
+            if (turnCount == 0) {
+                score1 = random1 + random2 + random3+ random4 + random5;
+            }
+            else if (turnCount == 1) {
+                score2 = random1 + random2 + random3+ random4 + random5;
+            }
+            else if (turnCount == 2) {
+                score3 = random1 + random2 + random3+ random4 + random5;
+            }
+            else if (turnCount == 3) {
+                score4 = random1 + random2 + random3+ random4 + random5;
+            }
+        }
+    }
+    
+    public void FullHouse() {
+        if (fullHouse.isSelected()) {
+            if (turnCount == 0) {
+                score1 = score1 + 25;
+            }
+            else if (turnCount == 1) {
+                score2 = score2 + 25;
+            }
+            else if (turnCount == 2) {
+                score3 = score3 + 25;
+            }
+            else if (turnCount == 3) {
+                score4 = score4 + 25;
+            }
+        }
+    }
+    
+    public void SmStraight() {
+        
+    }
+    
+    public void LgStraight() {
+        
+    }
+    
+    public void Yahtzee() {
+        if (Yahtzee.isSelected()) {
+            if (YahtzeeBonus1 == false && turnCount == 0) {
+                    score1 = score1 + YAHTZEE;
+            }
+            else if (YahtzeeBonus1 == true && turnCount == 0) {
+                    score1 = score1 + BONUS;
+            }
+            else if (YahtzeeBonus2 == false && turnCount == 1) {
+                    score2 = score2 + YAHTZEE;
+            }
+            else if (YahtzeeBonus2 == true && turnCount == 1) {
+                    score2 = score2 + BONUS;
+            }
+            else if (YahtzeeBonus3 == false && turnCount == 2) {
+                    score3 = score3 + YAHTZEE;
+            }
+            else if (YahtzeeBonus3 == true && turnCount == 2) {
+                    score3 = score3 + BONUS;
+            }
+            else if (YahtzeeBonus4 == false && turnCount == 3) {
+                    score4 = score4 + YAHTZEE;
+            }
+            else if (YahtzeeBonus4 == true && turnCount == 3) {
+                    score4 = score4 + BONUS;
+            }
+        }
+    }
+    
+    public void Chance() {
+        
+    }
+    
     public void turnOrder() {
         if (numPlayers == 1) {
             turnCount = 0;
@@ -1114,6 +1307,7 @@ public class Yahtzee extends javax.swing.JFrame {
     private javax.swing.JPanel Start;
     private javax.swing.JRadioButton Yahtzee;
     private javax.swing.JRadioButton aces;
+    private javax.swing.ButtonGroup category;
     private javax.swing.JRadioButton chance;
     private javax.swing.JLabel dicePic;
     private javax.swing.JButton endTurnButton;
