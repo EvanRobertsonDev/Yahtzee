@@ -610,6 +610,25 @@ public class Yahtzee extends javax.swing.JFrame {
         else {
             fullHouse.setEnabled(false);
         }
+        //Check for small straight FIX FIX FIX FIX FIX FIX FIX FIX FIX FIX
+        if (diceArray[3] - diceArray[0] == 3 || diceArray[4] - diceArray[1] == 3) {
+            largeStraight.setEnabled(true);
+        }
+        else {
+            largeStraight.setEnabled(false);
+        }
+        
+        //Check for large straight
+        for (int i = 0; i < 4; i++) {
+            if (diceArray[i] + 1 == diceArray[i+1]) {
+                largeStraight.setEnabled(true);
+            }
+            else {
+                largeStraight.setEnabled(false);
+                i = 4;
+            }
+        }
+        
         //Check for Yahtzee
         for (int i = 0; i < 1; i++) {
                 if (diceArray[i] == diceArray[i+1] && diceArray[i] == diceArray[i+2] && diceArray[i] == diceArray[i+3] && diceArray[i] == diceArray[i+4]) {
