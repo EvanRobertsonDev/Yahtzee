@@ -30,6 +30,15 @@ public class Yahtzee extends javax.swing.JFrame {
         player3.setEnabled(false);
         player4.setEnabled(false);
         
+        
+        threeKind.setEnabled(false);
+        fourKind.setEnabled(false);
+        Yahtzee.setEnabled(false);
+        fullHouse.setEnabled(false);
+        largeStraight.setEnabled(false);
+        smallStraight.setEnabled(false);
+        chance.setEnabled(false);
+        
     }
     //Name variables
     String name1;
@@ -47,6 +56,7 @@ public class Yahtzee extends javax.swing.JFrame {
     int turnCount = 0;
     int numPlayers = 0;
     
+    
     int random1 = 0;
     int random2 = 0;
     int random3 = 0;
@@ -54,6 +64,10 @@ public class Yahtzee extends javax.swing.JFrame {
     int random5 = 0;
     
     int [] diceArray = new int [5];
+    int [] dieArray = new int [5];
+    
+    //Checking Small Stright
+    int SmallCounter = 0;
     
     //Checking full house
     boolean hasPair = false;
@@ -106,6 +120,7 @@ public class Yahtzee extends javax.swing.JFrame {
         smallStraight = new javax.swing.JRadioButton();
         title = new javax.swing.JLabel();
         turnLabel = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         Start = new javax.swing.JPanel();
         title1 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -139,7 +154,7 @@ public class Yahtzee extends javax.swing.JFrame {
                 rerollButtonActionPerformed(evt);
             }
         });
-        GamePage.add(rerollButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, -1, -1));
+        GamePage.add(rerollButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, -1, -1));
 
         roll5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         roll5.setForeground(new java.awt.Color(255, 255, 255));
@@ -173,7 +188,7 @@ public class Yahtzee extends javax.swing.JFrame {
                 rollButtonActionPerformed(evt);
             }
         });
-        GamePage.add(rollButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, -1, -1));
+        GamePage.add(rollButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -343,6 +358,11 @@ public class Yahtzee extends javax.swing.JFrame {
         turnLabel.setForeground(new java.awt.Color(255, 255, 255));
         turnLabel.setText("It's ____'s Turn");
         GamePage.add(turnLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        jButton1.setBackground(new java.awt.Color(102, 102, 255));
+        jButton1.setText("Done");
+        jButton1.setEnabled(false);
+        GamePage.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, -1, -1));
 
         getContentPane().add(GamePage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 490));
 
@@ -556,12 +576,20 @@ public class Yahtzee extends javax.swing.JFrame {
         roll5.setText(String.valueOf(random5));
         
         //Set to array
-        diceArray[0] = random1;
-        diceArray[1] = random2;
-        diceArray[2] = random3;
-        diceArray[3] = random4;
-        diceArray[4] = random5;
+        diceArray[0] = 1;
+        diceArray[1] = 4;
+        diceArray[2] = 4;
+        diceArray[3] = 3;
+        diceArray[4] = 3;
         Arrays.sort(diceArray);
+        
+        dieArray[0] = 1;
+        dieArray[1]  =2;
+        dieArray[2] = 3;
+        dieArray[3] = 4;
+        dieArray[4] = 4;
+        Arrays.sort(dieArray);
+        
         
         //Check for Three of a kind
         for (int i = 0; i < 3; i++) {
@@ -610,12 +638,24 @@ public class Yahtzee extends javax.swing.JFrame {
         else {
             fullHouse.setEnabled(false);
         }
-        //Check for small straight FIX FIX FIX FIX FIX FIX FIX FIX FIX FIX
-        if (diceArray[3] - diceArray[0] == 3 || diceArray[4] - diceArray[1] == 3) {
-            largeStraight.setEnabled(true);
-        }
-        else {
-            largeStraight.setEnabled(false);
+        //Check for small straight
+        for (int i = 0; i < 3; i++) {
+            System.out.println(dieArray[i]);
+            System.out.println("Yeet");
+            System.out.println(dieArray[i+1]);
+            if (dieArray[i] + 1 == dieArray[i+1]) {
+                SmallCounter = SmallCounter + 1;
+                System.out.println(SmallCounter);
+            }
+            else if (dieArray[i+1] == dieArray[i]) {
+                continue;
+            }
+            
+            if (SmallCounter == 3) {
+                smallStraight.setEnabled(true);
+                System.out.println("Yeet");
+            }
+            System.out.println("Kfflushfban");
         }
         
         //Check for large straight
@@ -1201,26 +1241,52 @@ public class Yahtzee extends javax.swing.JFrame {
     public void FullHouse() {
         if (fullHouse.isSelected()) {
             if (turnCount == 0) {
-                score1 = score1 + 25;
+                score1 = score1 + FULL_HOUSE;
             }
             else if (turnCount == 1) {
-                score2 = score2 + 25;
+                score2 = score2 + FULL_HOUSE;
             }
             else if (turnCount == 2) {
-                score3 = score3 + 25;
+                score3 = score3 + FULL_HOUSE;
             }
             else if (turnCount == 3) {
-                score4 = score4 + 25;
+                score4 = score4 + FULL_HOUSE;
             }
         }
     }
     
     public void SmStraight() {
-        
+        if (smallStraight.isSelected()) {
+            if (turnCount == 0) {
+                score1 = score1 + SM_STRAIGHT;
+            }
+            else if (turnCount == 1) {
+                score2 = score2 + SM_STRAIGHT;
+            }
+            else if (turnCount == 2) {
+                score3 = score3 + SM_STRAIGHT;
+            }
+            else if (turnCount == 3) {
+                score4 = score4 + SM_STRAIGHT;
+            }
+        }
     }
     
     public void LgStraight() {
-        
+        if(largeStraight.isSelected()) {
+            if (turnCount == 0) {
+                score1 = score1 + LG_STRAIGHT;
+            }
+            else if (turnCount == 1) {
+                score2 = score2 + LG_STRAIGHT;
+            }
+            else if (turnCount == 2) {
+                score3 = score3 + LG_STRAIGHT;
+            }
+            else if (turnCount == 3) {
+                score4 = score4 + LG_STRAIGHT;
+            }
+        }
     }
     
     public void Yahtzee() {
@@ -1334,6 +1400,7 @@ public class Yahtzee extends javax.swing.JFrame {
     private javax.swing.JRadioButton fourKind;
     private javax.swing.JRadioButton fours;
     private javax.swing.JRadioButton fullHouse;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
