@@ -683,11 +683,11 @@ public class Yahtzee extends javax.swing.JFrame {
         Arrays.sort(diceArray);
         
         //Second array specfically for small straight
-        dieArray[0] = random1;
-        dieArray[1] = random2;
-        dieArray[2] = random3;
-        dieArray[3] = random4;
-        dieArray[4] = random5;
+        dieArray[0] = diceArray[0];
+        dieArray[1] = diceArray[1];
+        dieArray[2] = diceArray[2];
+        dieArray[3] = diceArray[3];
+        dieArray[4] = diceArray[4];
         Arrays.sort(dieArray);
         
         //Enable all radio buttons and disable accordingly
@@ -949,6 +949,7 @@ public class Yahtzee extends javax.swing.JFrame {
                         }
                         else if (dieArray[i+1] == dieArray[i]) {
                         }
+                        
 
                         if (SmallCounter == 3) {
                             smallStraight.setEnabled(true);
@@ -1248,6 +1249,7 @@ public class Yahtzee extends javax.swing.JFrame {
                         SmallCounter = SmallCounter + 1;
                     }
                     else if (dieArray[i+1] == dieArray[i]) {
+                        
                     }
 
                     if (SmallCounter == 3) {
@@ -1363,7 +1365,12 @@ public class Yahtzee extends javax.swing.JFrame {
         turnOrder();
         scorePage.setVisible(true);
         GamePage.setVisible(false);
-        
+        roll1.setForeground(Color.white);
+        roll2.setForeground(Color.white);
+        roll3.setForeground(Color.white);
+        roll4.setForeground(Color.white);
+        roll5.setForeground(Color.white);
+        reRollCount = 0;
     }//GEN-LAST:event_endTurnButtonActionPerformed
 
     private void roll1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roll1MouseClicked
@@ -1429,7 +1436,6 @@ public class Yahtzee extends javax.swing.JFrame {
         }
         reRoll();
         doneButton.setEnabled(false);
-        rerollButton.setEnabled(true);
     }//GEN-LAST:event_doneButtonActionPerformed
 
     public void UpperSection() {
