@@ -24,6 +24,7 @@ public class Yahtzee extends javax.swing.JFrame {
     public Yahtzee() {
         initComponents();
         //Setup start page
+        startGame.setEnabled(false);
         GamePage.setVisible(false);
         scorePage.setVisible(false);
         player1.setEnabled(false);
@@ -158,6 +159,17 @@ public class Yahtzee extends javax.swing.JFrame {
     private void initComponents() {
 
         category = new javax.swing.ButtonGroup();
+        Start = new javax.swing.JPanel();
+        title1 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        playCount = new javax.swing.JComboBox();
+        jLabel2 = new javax.swing.JLabel();
+        player1 = new javax.swing.JTextField();
+        player2 = new javax.swing.JTextField();
+        player3 = new javax.swing.JTextField();
+        player4 = new javax.swing.JTextField();
+        startGame = new javax.swing.JButton();
+        Rules = new javax.swing.JButton();
         GamePage = new javax.swing.JPanel();
         rerollButton = new javax.swing.JButton();
         roll5 = new javax.swing.JLabel();
@@ -187,17 +199,6 @@ public class Yahtzee extends javax.swing.JFrame {
         title = new javax.swing.JLabel();
         turnLabel = new javax.swing.JLabel();
         doneButton = new javax.swing.JButton();
-        Start = new javax.swing.JPanel();
-        title1 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        playCount = new javax.swing.JComboBox();
-        jLabel2 = new javax.swing.JLabel();
-        player1 = new javax.swing.JTextField();
-        player2 = new javax.swing.JTextField();
-        player3 = new javax.swing.JTextField();
-        player4 = new javax.swing.JTextField();
-        startGame = new javax.swing.JButton();
-        Rules = new javax.swing.JButton();
         scorePage = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         scoreTable = new javax.swing.JTable();
@@ -207,6 +208,58 @@ public class Yahtzee extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Start.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        title1.setBackground(new java.awt.Color(255, 255, 255));
+        title1.setFont(new java.awt.Font("Rosewood Std Regular", 0, 110)); // NOI18N
+        title1.setForeground(new java.awt.Color(255, 153, 0));
+        title1.setText("yahtzee");
+        Start.add(title1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 440, -1));
+
+        jLabel1.setFont(new java.awt.Font("AdLib Win95BT", 0, 14)); // NOI18N
+        jLabel1.setText("What are their names?");
+        Start.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 230, -1, -1));
+
+        playCount.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1 Player", "2 Players", "3 Players", "4 Players" }));
+        playCount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playCountActionPerformed(evt);
+            }
+        });
+        Start.add(playCount, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 180, -1, -1));
+
+        jLabel2.setFont(new java.awt.Font("AdLib Win95BT", 0, 14)); // NOI18N
+        jLabel2.setText("How many people are playing?");
+        Start.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, -1, -1));
+        Start.add(player1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 260, 90, -1));
+        Start.add(player2, new org.netbeans.lib.awtextra.AbsoluteConstraints(399, 260, 90, -1));
+
+        player3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                player3ActionPerformed(evt);
+            }
+        });
+        Start.add(player3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 310, 90, -1));
+        Start.add(player4, new org.netbeans.lib.awtextra.AbsoluteConstraints(399, 310, 90, -1));
+
+        startGame.setText("Start Game");
+        startGame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startGameActionPerformed(evt);
+            }
+        });
+        Start.add(startGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 350, 90, -1));
+
+        Rules.setText("Rules");
+        Rules.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RulesActionPerformed(evt);
+            }
+        });
+        Start.add(Rules, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 390, 90, 30));
+
+        getContentPane().add(Start, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 490));
 
         GamePage.setBackground(new java.awt.Color(102, 102, 255));
         GamePage.setForeground(new java.awt.Color(255, 153, 0));
@@ -462,58 +515,6 @@ public class Yahtzee extends javax.swing.JFrame {
 
         getContentPane().add(GamePage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 490));
 
-        Start.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        title1.setBackground(new java.awt.Color(255, 255, 255));
-        title1.setFont(new java.awt.Font("Rosewood Std Regular", 0, 110)); // NOI18N
-        title1.setForeground(new java.awt.Color(255, 153, 0));
-        title1.setText("yahtzee");
-        Start.add(title1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 440, -1));
-
-        jLabel1.setFont(new java.awt.Font("AdLib Win95BT", 0, 14)); // NOI18N
-        jLabel1.setText("What are their names?");
-        Start.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 230, -1, -1));
-
-        playCount.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1 Player", "2 Players", "3 Players", "4 Players" }));
-        playCount.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                playCountActionPerformed(evt);
-            }
-        });
-        Start.add(playCount, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 180, -1, -1));
-
-        jLabel2.setFont(new java.awt.Font("AdLib Win95BT", 0, 14)); // NOI18N
-        jLabel2.setText("How many people are playing?");
-        Start.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, -1, -1));
-        Start.add(player1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 260, 90, -1));
-        Start.add(player2, new org.netbeans.lib.awtextra.AbsoluteConstraints(399, 260, 90, -1));
-
-        player3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                player3ActionPerformed(evt);
-            }
-        });
-        Start.add(player3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 310, 90, -1));
-        Start.add(player4, new org.netbeans.lib.awtextra.AbsoluteConstraints(399, 310, 90, -1));
-
-        startGame.setText("Start Game");
-        startGame.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                startGameActionPerformed(evt);
-            }
-        });
-        Start.add(startGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 350, 90, -1));
-
-        Rules.setText("Rules");
-        Rules.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RulesActionPerformed(evt);
-            }
-        });
-        Start.add(Rules, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 390, 90, 30));
-
-        getContentPane().add(Start, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 490));
-
         scorePage.setBackground(new java.awt.Color(102, 102, 255));
         scorePage.setForeground(new java.awt.Color(255, 153, 0));
         scorePage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -575,6 +576,11 @@ public class Yahtzee extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_player3ActionPerformed
 
+    /**
+     * When an amount of players is chosen from the combo box it sets that number
+     * to a variable and unlocks the start button
+     * @param evt 
+     */
     private void playCountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playCountActionPerformed
         //Decide how many players and then enables boxes for names
         if (playCount.getSelectedIndex() == 0) {
@@ -583,6 +589,7 @@ public class Yahtzee extends javax.swing.JFrame {
             player3.setEnabled(false);
             player4.setEnabled(false);
             numPlayers = 1;
+            startGame.setEnabled(true);
         }
         else if (playCount.getSelectedIndex() == 1) {
             player1.setEnabled(true);
@@ -590,6 +597,7 @@ public class Yahtzee extends javax.swing.JFrame {
             player3.setEnabled(false);
             player4.setEnabled(false);
             numPlayers = 2;
+            startGame.setEnabled(true);
         }
         else if (playCount.getSelectedIndex() == 2) {
             player1.setEnabled(true);
@@ -597,6 +605,7 @@ public class Yahtzee extends javax.swing.JFrame {
             player3.setEnabled(true);
             player4.setEnabled(false);
             numPlayers = 3;
+            startGame.setEnabled(true);
         }
         else {
             player1.setEnabled(true);
@@ -604,9 +613,15 @@ public class Yahtzee extends javax.swing.JFrame {
             player3.setEnabled(true);
             player4.setEnabled(true);
             numPlayers = 4;
+            startGame.setEnabled(true);
         }
     }//GEN-LAST:event_playCountActionPerformed
 
+    /**
+     * When start button is set get the text from the start page and add it to
+     * a score table
+     * @param evt 
+     */
     private void startGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startGameActionPerformed
         //Get text and start game
         if (playCount.getSelectedIndex() == 0) {
@@ -639,6 +654,11 @@ public class Yahtzee extends javax.swing.JFrame {
         Start.setVisible(false);
     }//GEN-LAST:event_startGameActionPerformed
 
+    /**
+     * When play button is clicked set the players name to the top right, 
+     * indicating who's turn it is
+     * @param evt 
+     */
     private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
         scorePage.setVisible(false);
         GamePage.setVisible(true);
@@ -655,7 +675,17 @@ public class Yahtzee extends javax.swing.JFrame {
             turnLabel.setText("It's " + name4 + "'s turn");
         }
     }//GEN-LAST:event_playButtonActionPerformed
-
+    
+    /**
+     * When roll button is pressed clear any selection of buttons that may have 
+     * been chosen before hand, generate random numbers, set to array, and set 
+     * each number to labels. Enable all radio buttons and then call methods to 
+     * check if A: the category has already been used or B: the dice rolled do 
+     * not meet the requirements for a radio button.
+     * 
+     * Enable the re roll button and setup for a potential re roll of dice
+     * @param evt 
+     */
     private void rollButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rollButtonActionPerformed
         //Clear button selection
         category.clearSelection();
@@ -675,11 +705,11 @@ public class Yahtzee extends javax.swing.JFrame {
         roll5.setText(String.valueOf(random5));
         
         //Set to array
-        diceArray[0] = random1;
-        diceArray[1] = random2;
-        diceArray[2] = random3;
-        diceArray[3] = random4;
-        diceArray[4] = random5;
+        diceArray[0] = 1;
+        diceArray[1] = 2;
+        diceArray[2] = 3;
+        diceArray[3] = 6;
+        diceArray[4] = 5;
         Arrays.sort(diceArray);
         
         //Second array specfically for small straight
@@ -726,6 +756,10 @@ public class Yahtzee extends javax.swing.JFrame {
         endTurnButton.setEnabled(true);
     }//GEN-LAST:event_rollButtonActionPerformed
     
+    /**
+     * This method checks whether a category has already been chosen and if so
+     * disables the radio button
+     */
     public void selections() {
         //Check if aces have been used
         if (turnCount == 0 && Aces1 == true) {
@@ -885,6 +919,10 @@ public class Yahtzee extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * The method checks for what the player rolled and sees whether to enable 
+     * the radio button
+     */
     public void player1Roll() {
         //Check what player 1 rolled
         if (turnCount == 0) {
@@ -947,10 +985,9 @@ public class Yahtzee extends javax.swing.JFrame {
                         if (dieArray[i] + 1 == dieArray[i+1]) {
                             SmallCounter = SmallCounter + 1;
                         }
-                        else if (dieArray[i+1] == dieArray[i]) {
+                        if (dieArray[i+1] == dieArray[i]) {
+                            
                         }
-                        
-
                         if (SmallCounter == 3) {
                             smallStraight.setEnabled(true);
                         }
@@ -958,6 +995,9 @@ public class Yahtzee extends javax.swing.JFrame {
                             smallStraight.setEnabled(false);
                         }
                     }
+                    if (SmallCounter < 3) {
+                        SmallCounter = 0;
+                        }
                 }
                 //Check for large straight
                 if (largeStraight1 == false) {
@@ -986,6 +1026,10 @@ public class Yahtzee extends javax.swing.JFrame {
                 }
         }
     
+    /**
+     * The method checks for what the second player rolled and sees whether to enable 
+     * the radio button
+     */
     public void player2Roll() {
         //Player 2's roll enabling radio buttonss
         if (turnCount == 1) {
@@ -1086,6 +1130,10 @@ public class Yahtzee extends javax.swing.JFrame {
             }
     }
     
+    /**
+     * The method checks for what the third rolled and sees whether to enable 
+     * the radio button
+     */
     public void player3Roll() {
         //Player 3's roll for enabling radio button
         if (turnCount == 2) {
@@ -1186,6 +1234,10 @@ public class Yahtzee extends javax.swing.JFrame {
             }
     }
     
+    /**
+     * The method checks for what the fourth player rolled and sees whether to enable 
+     * the radio button
+     */
     public void player4Roll() {
         //Player 4's roll for enabling radio buttons
         if (turnCount == 3) {
@@ -1287,6 +1339,10 @@ public class Yahtzee extends javax.swing.JFrame {
             }
     }
     
+    /**
+     * This method is called when a re roll occurs. This is everything in the 
+     * roll method excluding things that do not need to be restated
+     */
     public void reRoll() {
         //Set to array
         diceArray[0] = random1;
@@ -1329,15 +1385,25 @@ public class Yahtzee extends javax.swing.JFrame {
         player4Roll();
     }
     
+    /**
+    * When the re roll button is pressed it will enable the user to choose 
+    * which numbers they want to re roll.
+    * @param evt 
+    */
     private void rerollButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rerollButtonActionPerformed
         reRollPress = true;
         rerollButton.setEnabled(false);
         doneButton.setEnabled(true);
     }//GEN-LAST:event_rerollButtonActionPerformed
 
+    /**
+     * When Rules button is pressed it will open a link to a document containing
+     * the rules
+     * @param evt 
+     */
     private void RulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RulesActionPerformed
         try {
-                    Desktop.getDesktop().browse(new URI("https://docs.google.com/document/d/1p1zD98FQYYBEBNnEBhoGrpwI9Fd3C7gK16iQRNCXsrw/edit?usp=sharing"));
+                    Desktop.getDesktop().browse(new URI(""));
                 } catch (IOException | URISyntaxException e1) {
                     e1.printStackTrace();
                 }
@@ -1346,7 +1412,12 @@ public class Yahtzee extends javax.swing.JFrame {
     private void acesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acesActionPerformed
         
     }//GEN-LAST:event_acesActionPerformed
-
+    
+    /**
+     * When the end turn button is pressed the program will run through to see 
+     * which radio button was pressed and gives a score based on it
+     * @param evt 
+     */
     private void endTurnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endTurnButtonActionPerformed
         UpperSection();
         LowerSection();
@@ -1371,48 +1442,73 @@ public class Yahtzee extends javax.swing.JFrame {
         roll4.setForeground(Color.white);
         roll5.setForeground(Color.white);
         reRollCount = 0;
+        reRollPress = false;
     }//GEN-LAST:event_endTurnButtonActionPerformed
 
+    /**
+     * Check if label is clicked during re roll
+     * @param evt 
+     */
     private void roll1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roll1MouseClicked
         if (reRollCount < 3 && reRollPress == true) {
-            roll1.setForeground(Color.yellow);
+            roll1.setForeground(Color.orange);
             reRoll1 = true;
             reRollCount++;
         }
     }//GEN-LAST:event_roll1MouseClicked
-
+    
+    /**
+     * Check if label is clicked during re roll
+     * @param evt 
+     */
     private void roll2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roll2MouseClicked
         if (reRollCount < 3 && reRollPress == true) {
-            roll2.setForeground(Color.yellow);
+            roll2.setForeground(Color.orange);
             reRoll2 = true;
             reRollCount++;
         }
     }//GEN-LAST:event_roll2MouseClicked
-
+    
+    /**
+     * Check if label is clicked during re roll
+     * @param evt 
+     */
     private void roll3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roll3MouseClicked
         if (reRollCount < 3 && reRollPress == true) {
-            roll3.setForeground(Color.yellow);
+            roll3.setForeground(Color.orange);
             reRoll3 = true;
             reRollCount++;
         }
     }//GEN-LAST:event_roll3MouseClicked
-
+    
+    /**
+     * Check if label is clicked during re roll
+     * @param evt 
+     */
     private void roll4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roll4MouseClicked
         if (reRollCount < 3 && reRollPress == true) {
-            roll4.setForeground(Color.yellow);
+            roll4.setForeground(Color.orange);
             reRoll4 = true;
             reRollCount++;
         }
     }//GEN-LAST:event_roll4MouseClicked
-
+    
+    /**
+     * Check if label is clicked during re roll
+     * @param evt 
+     */
     private void roll5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roll5MouseClicked
         if (reRollCount < 3 && reRollPress == true) {
-            roll5.setForeground(Color.yellow);
+            roll5.setForeground(Color.orange);
             reRoll5 = true;
             reRollCount++;
         }
     }//GEN-LAST:event_roll5MouseClicked
-
+    
+    /**
+     * When done button is pressed it will set the selected numbers to new ones
+     * @param evt 
+     */
     private void doneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneButtonActionPerformed
         if (reRoll1 == true) {
             random1 = (int)Math.round(Math.random()*5+1);
@@ -1438,6 +1534,9 @@ public class Yahtzee extends javax.swing.JFrame {
         doneButton.setEnabled(false);
     }//GEN-LAST:event_doneButtonActionPerformed
 
+    /**
+     * Method that calls other methods
+     */
     public void UpperSection() {
         Aces();
         Twos();
@@ -1447,6 +1546,9 @@ public class Yahtzee extends javax.swing.JFrame {
         Sixes();
     }
     
+    /**
+     * Another method that calls other methods
+     */
     public void LowerSection() {
         ThreeKind();
         FourKind();
@@ -1457,6 +1559,9 @@ public class Yahtzee extends javax.swing.JFrame {
         Chance();
     }
     
+    /**
+     * Checks if aces is selected and adds points accordingly
+     */
     public void Aces() {
         //Add all ones
         if (aces.isSelected()) {
@@ -1545,6 +1650,9 @@ public class Yahtzee extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Checks if twos is selected and adds points accordingly
+     */
     public void Twos() {
         //Add all twos
         if(twos.isSelected()) {
@@ -1633,6 +1741,9 @@ public class Yahtzee extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Checks if threes is selected and adds points accordingly
+     */
     public void Threes() {
         //Add all threes
         if(threes.isSelected()) {
@@ -1721,6 +1832,9 @@ public class Yahtzee extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Checks if fours is selected and adds points accordingly
+     */
     public void Fours() {
         //Add all fours
         if(fours.isSelected()) {
@@ -1810,6 +1924,9 @@ public class Yahtzee extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Checks if fives is selected and adds points accordingly
+     */
     public void Fives() {
         //Add all fives
         if(fives.isSelected()) {
@@ -1898,6 +2015,9 @@ public class Yahtzee extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Checks if sixes is selected and adds points accordingly
+     */
     public void Sixes() {
         //Add all sixes
         if(sixes.isSelected()) {
@@ -1986,6 +2106,9 @@ public class Yahtzee extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Checks if three of a kind is selected and adds points accordingly
+     */
     public void ThreeKind() {
         
         if (threeKind.isSelected()) {
@@ -2008,6 +2131,9 @@ public class Yahtzee extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Checks if four of a kind is selected and adds points accordingly
+     */
     public void FourKind() {
         if (fourKind.isSelected()) {
             if (turnCount == 0) {
@@ -2029,6 +2155,9 @@ public class Yahtzee extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Checks if full house is selected and adds points accordingly
+     */
     public void FullHouse() {
         if (fullHouse.isSelected()) {
             if (turnCount == 0) {
@@ -2050,6 +2179,9 @@ public class Yahtzee extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Checks if small straight is selected and adds points accordingly
+     */
     public void SmStraight() {
         if (smallStraight.isSelected()) {
             if (turnCount == 0) {
@@ -2071,6 +2203,9 @@ public class Yahtzee extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Checks if large straight is selected and adds points accordingly
+     */
     public void LgStraight() {
         if(largeStraight.isSelected()) {
             if (turnCount == 0) {
@@ -2092,6 +2227,9 @@ public class Yahtzee extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Checks if yahtzee is selected and adds points accordingly
+     */
     public void Yahtzee() {
         if (Yahtzee.isSelected()) {
             if (YahtzeeBonus1 == false && turnCount == 0) {
@@ -2121,6 +2259,9 @@ public class Yahtzee extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Checks if chance is selected and adds points accordingly
+     */
     public void Chance() {
         if (chance.isSelected()) {
             if (turnCount == 0) {
@@ -2142,6 +2283,9 @@ public class Yahtzee extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Determines whos turn it is
+     */
     public void turnOrder() {
         if (numPlayers == 1) {
             turnCount = 0;
