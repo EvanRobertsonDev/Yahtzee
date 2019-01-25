@@ -27,6 +27,7 @@ public class Yahtzee extends javax.swing.JFrame {
         startGame.setEnabled(false);
         GamePage.setVisible(false);
         scorePage.setVisible(false);
+        winPage.setVisible(false);
         player1.setEnabled(false);
         player2.setEnabled(false);
         player3.setEnabled(false);
@@ -46,6 +47,10 @@ public class Yahtzee extends javax.swing.JFrame {
     String name2;
     String name3;
     String name4;
+    
+    
+    //Round counter
+    int rounds = 0;
     
     //Scores for players
     int score1 = 0;
@@ -159,6 +164,9 @@ public class Yahtzee extends javax.swing.JFrame {
     private void initComponents() {
 
         category = new javax.swing.ButtonGroup();
+        winPage = new javax.swing.JPanel();
+        winnerText = new javax.swing.JLabel();
+        win = new javax.swing.JLabel();
         Start = new javax.swing.JPanel();
         title1 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -208,6 +216,22 @@ public class Yahtzee extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        winPage.setBackground(new java.awt.Color(102, 102, 255));
+        winPage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        winnerText.setFont(new java.awt.Font("Segoe Media Center", 0, 36)); // NOI18N
+        winnerText.setForeground(new java.awt.Color(255, 204, 0));
+        winnerText.setText("_______ has won the game!");
+        winPage.add(winnerText, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 240, -1, -1));
+
+        win.setBackground(new java.awt.Color(255, 204, 0));
+        win.setFont(new java.awt.Font("Segoe Media Center", 0, 36)); // NOI18N
+        win.setForeground(new java.awt.Color(255, 204, 0));
+        win.setText("Winner!");
+        winPage.add(win, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 190, -1, -1));
+
+        getContentPane().add(winPage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 490));
 
         Start.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -626,21 +650,25 @@ public class Yahtzee extends javax.swing.JFrame {
         //Get text and start game
         if (playCount.getSelectedIndex() == 0) {
             name1 = player1.getText();
+            rounds = 13;
         }
         else if (playCount.getSelectedIndex() == 1) {
             name1 = player1.getText();
             name2 = player2.getText();
+            rounds = 26;
         }
         else if (playCount.getSelectedIndex() == 2) {
             name1 = player1.getText();
             name2 = player2.getText();
             name3 = player3.getText();
+            rounds = 39;
         }
         else {
             name1 = player1.getText();
             name2 = player2.getText();
             name3 = player3.getText();
             name4 = player4.getText();
+            rounds = 52;
         }
         scoreTable.setValueAt(name1, 0, 0);
         scoreTable.setValueAt(name2, 1, 0);
@@ -1402,8 +1430,9 @@ public class Yahtzee extends javax.swing.JFrame {
      * @param evt 
      */
     private void RulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RulesActionPerformed
+        //Open the rules
         try {
-                    Desktop.getDesktop().browse(new URI(""));
+                    Desktop.getDesktop().browse(new URI("https://docs.google.com/document/d/1p1zD98FQYYBEBNnEBhoGrpwI9Fd3C7gK16iQRNCXsrw/edit?usp=sharing"));
                 } catch (IOException | URISyntaxException e1) {
                     e1.printStackTrace();
                 }
@@ -1423,26 +1452,57 @@ public class Yahtzee extends javax.swing.JFrame {
         LowerSection();
         if (turnCount == 0) {
             scoreTable.setValueAt(score1, 0, 1);
+            rounds--;
         }
         else if (turnCount == 1) {
             scoreTable.setValueAt(score2, 1, 1);
+            rounds--;
         }
         else if (turnCount == 2) {
             scoreTable.setValueAt(score3, 2, 1);
+            rounds--;
         }
         else {
             scoreTable.setValueAt(score4, 3, 1);
+            rounds--;
         }
-        turnOrder();
-        scorePage.setVisible(true);
-        GamePage.setVisible(false);
-        roll1.setForeground(Color.white);
-        roll2.setForeground(Color.white);
-        roll3.setForeground(Color.white);
-        roll4.setForeground(Color.white);
-        roll5.setForeground(Color.white);
-        reRollCount = 0;
-        reRollPress = false;
+        
+        //Check if there are 0 rounds left
+        if (rounds == 0) {
+            //Setup winners page
+            winPage.setVisible(true);
+            scorePage.setVisible(false);
+            GamePage.setVisible(false);
+            if (score1 > score2 && score1 > score3 && score1 > score4) {
+                winnerText.setText(name1 + " has won the game!");
+            }
+            else if (score2 > score1 && score2 > score3 && score2 > score4) {
+                winnerText.setText(name2 + " has won the game!");
+            }
+            else if (score3 > score1 && score3 > score2 && score3 > score4) {
+                winnerText.setText(name3 + " has won the game!");
+            }
+            else if (score4 > score1 && score4 > score2 && score4 > score3) {
+                winnerText.setText(name4 + " has won the game!");
+            }
+            else {
+                winnerText.setText("The game ended in a tie!");
+            }
+            
+        }
+        //If not contrinue like normal
+        else if (rounds != 0) {
+            turnOrder();
+            scorePage.setVisible(true);
+            GamePage.setVisible(false);
+            roll1.setForeground(Color.white);
+            roll2.setForeground(Color.white);
+            roll3.setForeground(Color.white);
+            roll4.setForeground(Color.white);
+            roll5.setForeground(Color.white);
+            reRollCount = 0;
+            reRollPress = false;
+        }
     }//GEN-LAST:event_endTurnButtonActionPerformed
 
     /**
@@ -2422,5 +2482,8 @@ public class Yahtzee extends javax.swing.JFrame {
     private javax.swing.JLabel turnLabel;
     private javax.swing.JRadioButton twos;
     private javax.swing.JScrollPane upperSection;
+    private javax.swing.JLabel win;
+    private javax.swing.JPanel winPage;
+    private javax.swing.JLabel winnerText;
     // End of variables declaration//GEN-END:variables
 }
